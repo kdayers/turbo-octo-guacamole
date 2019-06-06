@@ -1,4 +1,4 @@
-function [ x, ex ] = newton( f,df, x0, tol, nmax )
+function [ x, ex ] = newton(f,df, x0, tol, nmax )
 %
 % NEWTON Newton's Method
 %   Newton's method for finding successively better approximations to the 
