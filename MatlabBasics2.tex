@@ -1,0 +1,138 @@
+\documentclass[12pt]{report}
+\usepackage{amssymb,amsmath,color,graphicx}
+\topmargin = -.5in
+\textheight = 9in
+\parindent=0pt
+\parskip=12pt
+
+\begin{document}
+\centerline{Matlab Basics: Day 2}
+\begin{enumerate}
+\centerline{\it EDGE 2019}
+\item {\bf Plotting a function of one variable, (zooming in, hold on, line styles, adding a title and labeling axes).}
+Suppose you want to plot the function $f(x) = 2x ( 1 - x)$.  The easiest way is to use `ezplot':
+\begin{verbatim}
+ezplot('2*x*(1-x)')
+\end{verbatim}
+Note the single quotes around the function, which tells Matlab that you are typing in a ``string", or a sequence of symbols, that it will then interpret.  Also note the asterisks wherever there is multiplication.  Matlab insists on these.  \\
+You should get a graph of the function from $x = -6$ to $x = 6$, which is Matlab's default range.  To change the range, add a vector to the command:
+\begin{verbatim}
+ezplot('2*x*(1-x)',[0 1])
+\end{verbatim}
+now plots the function between 0 and 1. \\
+To add another graph to the same plot, say the diagonal $y = x$, first tell Matlab to ``hold on"
+\begin{verbatim}
+hold on
+ezplot('x',[0 1])
+\end{verbatim}
+You can find (approximately) where the two graphs intersects with the ``trace" feature.  Click on the icon in the menu-bar that has a plus sign on top of a piece of graph, with a bit of lined paper next to it.   This is called the ``Data Cursor".  Then click on the graph, and move the ``Data Tip" up or down with the arrows on your keyboard.  To get rid of the Data Tip, right click on it (or Control click) and then select ``Delete Data Tip".
+
+Clear the figure for the next example:
+\begin{verbatim}
+clf
+\end{verbatim}
+The less easy, but more flexible, way to plot a function is to first create a vector of x-values, then a vector of $f(x)$ values, and then plot one against the other.  For example:
+\begin{verbatim}
+ x = 0:.001:1;
+\end{verbatim}
+creates a vector called ``x" with the numbers between 0 and 1, at intervals of .001.  Then create the values of $f(x)$ and plot one against the other.  Notice that we needed to use ``component-by-component" multiplication to multiply the vectors ${\bf x}$ and ${\bf 1 - x}$:
+\begin{verbatim}
+f=3.2*x.*(1-x);
+plot(x,f)
+\end{verbatim}
+Add the diagonal in red:
+\begin{verbatim}
+hold on
+plot(x,x,'r')
+\end{verbatim}
+You can use the figure editing tools by selecting the arrow in the figure menu bar, and then selecting objects in the graph to edit.  (Try changing one of the lines to a dashed line, for example).  You can also insert labels and text using the ``Insert" pull-down menu in the figure window.  You can also plot only dots, or other symbols:
+\begin{verbatim}
+plot(.5, .5, 'm+')
+\end{verbatim}
+adds a magenta plus sign at the point $(.5, .5)$.  You can change these using the plot edit tools as well.  There is also a zoom feature in the menu bar (but there's nothing much to zoom on in this case!)
+\item	{\bf Plotting a function of two variables.}
+Matlab can plot in 3-d as well.  Suppose we want to plot a function of two variables:
+$f(x,y) = x^2 + y^2$.  Create vectors for $x$ and $y$ as before
+\begin{verbatim}
+x=-1:.01:1;
+y=-2:.01:2;
+\end{verbatim}
+Now we have to create GRIDS so that each $x$-value is paired with every possible $y$-value. There's a special command for this
+called ``meshgrid":
+\begin{verbatim}
+[X,Y] = meshgrid(x,y);
+\end{verbatim}
+$X$ and $Y$ are now gigantic matrices (check them out if you like by typing, e.g. ``X" followed by ``enter").  Now we calculate
+the function at each of the $(x,y)$-pairs and plot.  First we clear the figure again:
+\begin{verbatim}
+clf
+f = X.^2 + Y.^2;
+surf(x,y,f)
+\end{verbatim}
+Note that we need to use the capital letters (the matrices) in the first case, but the lower case (the vectors) for the axes of the plot.  ``surf" stands for surface, which is what you get.  You can rotate the graph around using the rotate icon in the figure menu-bar (it looks like a near-circular arc with an arrow on it surrounding a little box).  Check it out!
+\item	{\bf Writing a function as an M-file and using it.}
+We often want to store routines that calculate things so that we can use them over again without retyping.  These are stored in files called `M-files' and they alway end with the `.m' extension.  There are some of these in your folder, and the easiest way to figure these out is to look at one of them.  Open the file called `logistic.m'.  It should open in the ``Editor" window and look like this:
+\begin{verbatim}
+function y=logistic(x)
+
+global a
+
+y=a*x.*(1-x);
+\end{verbatim}
+The word ``function" is in blue because it is special: it tells Matlab that the file is a function that takes an argument (its input, in this case a number or vector called 'x') and it produces output, in this case the variable y, which is also a vector.  The name of the function is 'logistic', but Matlab really only cares what you name the file when you STORE it, not what you name the function here on the first line (to avoid confusion, these should probably be the same thing).   The second line says that `a' is a global variables, meaning that this function will use the value of a that you declared OUTSIDE of the function (in the command window).  The next line tells Matlab how to calculate y.  Notice that we used the `.*' for component-wise multiplication so that we can calculate the results for a vector of $x$-values.  Go back to the command window and type
+\begin{verbatim}
+global a
+a = 1;
+logistic(.5)
+
+ans =
+
+    0.2500
+    \end{verbatim}
+    These commands tell Matlab to declare $a$ to be a global variable (so that it is accessible to the function `logistic'), to set the variable a equal to 1, then to run the routine `logistic' with $x = .5$.  The answer should be:
+    $y = 1 \cdot x (1 - x ) = .5 (1 - .5) = .25$ which is what we got.
+   \\
+   Now we will modify the M-file a bit by removing the global variable.  Instead, we will pass the parameter $a$ to the function as another input, or ``argument".   Go back to the Editor and change the file to look like this:
+   \begin{verbatim}
+ function y=logistic2(x,a)
+
+y=a*x.*(1-x);
+\end{verbatim}
+and save this new M-file as 'logist2.m' (in the same folder).  Back in the command window try changing the values of $a$, which is now the second argument:
+\begin{verbatim}
+logistic2(.2,2)
+
+ans =
+
+0.3200
+
+logistic2(.2,4)
+
+ans =
+
+    0.6400
+\end{verbatim}
+Now try your hand at creating a new function called `cubic' which will return the function: $f(x) = a x^3 + (1-a)x $. It should take two arguments, $x$ and $a$.  Plot the function in the range $x = -1$ to $x = 1$ when $a = 3.5$.  Superimpose the diagonal (in red) and the axes (in black).  
+\vskip .1in
+{\it Here is one way to do this:} 
+The M-file should look like:
+\begin{verbatim}
+function y=cubic(x,a)
+
+y=a*x.^3 + (1-a)*x;
+\end{verbatim}
+and then in the Command Window type (don't forget to clear the figure first)
+\begin{verbatim}
+x=-1:.01:1;
+ y=cubic(x,3.5);
+ plot(x,y)
+ hold on
+ plot(x,x,'r')
+  plot([-1 1],[0 0],'k',[0 0],[-1 1],'k')
+  title('The cubic function y = 3.5 x(1-x)','fontsize',20)
+\end{verbatim}
+Note that you can plot several lines with one command, that 'k' stands for black, and that you can also add a title from the command window.
+\end{enumerate}
+
+
+\end{document}

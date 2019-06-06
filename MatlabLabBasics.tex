@@ -1,0 +1,143 @@
+\documentclass[12pt]{report}
+\usepackage{amssymb,amsmath,color,graphicx}
+\topmargin = -.5in
+\textheight = 9in
+\parindent=0pt
+\parskip=12pt
+
+\begin{document}
+\centerline{Matlab Basics: Day 1 }
+\centerline{\it EDGE 2019}
+\vskip .2in
+
+You should have the ``Command Window" open in front of you.  
+\begin{enumerate}
+\item {\bf How to declare and manipulate vectors and matrices.}
+
+To declare a variable to equal a number just set it equal to that number. So to set the variable ``$x$" equal to 47 type:
+\begin{verbatim}
+x = 47
+\end{verbatim}
+followed by ``enter".  You should see:
+\begin{verbatim}
+x =
+
+    47
+\end{verbatim}
+which means that Matlab thinks that $x$ is now equal to 47.  (From now on, it is implied that you type ``enter" after a given command.)  If you type a semi-colon after the command before typing ``enter", you won't see any output, but $x$ will still equal 47.  Try it:
+\begin{verbatim}
+x=4747;
+\end{verbatim}
+Now see what Matlab thinks $x$ is:
+\begin{verbatim}
+x
+\end{verbatim}
+and you should see
+\begin{verbatim}
+
+x =
+
+        4747
+  \end{verbatim}
+  To declare a matrix, put the numbers in square brackets, and separate rows by semi-colons. You may separate entries by commas for legibility, but that isn't necessary.
+  \begin{verbatim}
+ A = [1 2 3; 4 5 6; 7 8 9];  
+  \end{verbatim}
+  You should see that $A$ is a $3 \times 3$ matrix. Type
+  \begin{verbatim}
+  A
+\end{verbatim}
+to get
+\begin{verbatim}
+A =
+
+     1     2     3
+     4     5     6
+     7     8     9
+ \end{verbatim}
+ Multiplication is with an asterisk:
+ \begin{verbatim}
+  47 * 47
+
+ans =
+
+        2209
+ \end{verbatim}
+ or to multiply matrices:
+ \begin{verbatim}
+ A * A
+
+ans =
+
+    30    36    42
+    66    81    96
+   102   126   150
+\end{verbatim}
+Suppose you have two vectors:
+\begin{verbatim}
+x = [1 2 3];
+y = [4 5 6];
+\end{verbatim}
+and you want to multiply each element of $x$ by the corresponding element in $y$. You can do ``component-by-component" multiplication
+using the `.*' command:
+\begin{verbatim}
+ x.*y
+
+ans =
+
+     4    10    18
+ \end{verbatim}
+ The same goes for division or exponentiation, which is done with a carat \quad $\hat{}$\quad :
+ \begin{verbatim}
+ y.^x
+
+ans =
+
+     4    25   216
+\end{verbatim}
+You can also invert matrices, find their determinants and eigenvalues:
+\begin{verbatim}
+>> A = [4 2; 1 3]
+
+A =
+
+     4     2
+     1     3
+
+>> inv(A)
+
+ans =
+
+    0.3000   -0.2000
+   -0.1000    0.4000
+
+>> det(A)
+
+ans =
+
+    10
+
+>> eig(A)
+
+ans =
+
+     5
+     2
+\end{verbatim}
+\pagebreak
+
+To get the $n\times n$ identity matrix, use eye(n):
+\begin{verbatim}
+>>eye(3)
+
+ans =
+
+    1    0    0
+    0    1    0
+    0    0    1
+ 
+\end{verbatim}
+Similarly, zeroes(n) and ones(n) will give you, respectively, an $n\times n$ matrix of zeroes and ones. 
+
+\end{enumerate}
+\end{document}

@@ -1,0 +1,39 @@
+\documentclass[12pt]{report}
+\usepackage{amssymb,amsmath,color,graphicx}
+\topmargin = -.5in
+\textheight = 9in
+\parindent=0pt
+\parskip=12pt
+
+\begin{document}
+\centerline{Matlab Basics: Markov Chains }
+\centerline{\it EDGE 2019}
+\bigskip
+
+A {\it Markov chain} is a stochastic process on a finite set of states, $S=\{s_1,\ldots,s_n\}$. The process starts in one state and successively moves from one state to another.  If the state is currently in state $s_i$, it will move to state $s_j$ with probability $p_{ij}$.  A Markov chain is {\it memoryless}; the probability $p_ij$ is only dependent on the current state and the next state; it does not depend on all of the states that came before in the previous steps. \\
+A Markov chain on $n$ states can be represented by an $n\times n$ stochastic matrix: 
+$$\mathbf{P}=[p_{ij}].$$
+$\mathbf{P}$ is known as the {\it transition matrix.} \\
+\vspace{2mm}
+
+\textbf{Example:} (From Kemeny, Snell, and Thompson) The Land of Oz does not have good whether.  They never have two nice days in a row.  If they have a nice day, they are just as likely to have snow as rain the next day.  If they have snow or rain, they have an even chance of having the same the next day.  If there is a chain from snow or rain, only half of the time is this a change to a nice day.  From this information, we can form a Markov chain.  We take as states the kinds of weather R, N, and S.  Determine the transition probabilities from the above information and create the transition matrix $\mathbf{P}$.  What does $\mathbf{P}^n$ represent? Use MATLAB to compute $P^n$ for $n=2,\ldots, 8$.  What do you notice?  Can you explain theoretically what is happening? Hint: think about eigenvalues and eigenvectors. \\
+\vspace{2mm}
+
+A state $s_i$ is called {\it absorbing} if it is impossible to leave that state once visited (that is, $p_{ii}=1$).  A Markov chain is absorbing if it has at least one absorbing state, and if from every state it is possible to get to an absorbing state (not necessarily in one step).  In an absorbing Markov chain, any state which is not absorbing is called transient.  \\
+\vspace{2mm}
+
+\textbf{Example:}(Random Walk) A man is walking along a four-block stretch of a street.  If he is at corner 1, 2, or 3, then he walks to the right or left with equal probability.  He continues until he reaches corner 4, which is his friend's house, or corner 0, which is his home.  If he reaches either his or his friend's home, he stays there.  We can represent this Markov chain with a directed graph:
+\begin{center}
+\includegraphics[scale=0.6]{drunkard}
+\end{center}
+
+The transition matrix is then: 
+ $$\left(\begin{array}{ccccc}1 & 0 & 0 & 0 & 0 \\1/2 & 0 & 1/2 & 0 & 0 \\0 & 1/2 & 0 & 1/2 & 0 \\0 & 0 & 1/2 & 0 & 1/2 \\0 & 0 & 0 & 0 & 1\end{array}\right)$$
+Which states are absorbing, and which are transient? Discuss with a neighbor why the probability that the process will eventually reach an absorbing state is 1.\\
+\vspace{2mm}
+
+One question we can ask about absorbing Markov chains and their transient states is how many times the process will, on average, be in each absorbing state.\\
+\vspace{2mm}
+
+\textbf{Project:}  Use MATLAB to simulate the random walk, starting in states 1, 2 or 3, several times.  Use a counter to keep track of how many times each transient state is visited before the process gets absorbed.  Average these, and compare with what the theoretical results tell you (read handout) (try to do this without making use of built-in Markov chain functionalities in MATLAB). 
+\end{document}

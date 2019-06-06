@@ -1,0 +1,55 @@
+\documentclass[12pt]{report}
+\usepackage{amssymb,amsmath,color,graphicx}
+\parindent=0pt
+\parskip=16pt
+
+\begin{document}
+\centerline{Matlab Lab 1: Iterates and Cobwebs }
+\centerline{\it Math 112 - Spring, 2010}
+\vskip .2in
+STARTING UP MATLABAND SETTING THE PATHS
+\begin{enumerate}
+\item Turn on machine if necessary and log on.  
+\item	Download zipped Matlab file from the Sakai site.   Unzip these files into a folder somewhere in your workspace, named something that you’ll identify as related to this course. (For example: ``TotallyCoolMatlabStuff").
+\item	Start Matlab (under “Programs” in the Start menu).  At the upper left of the command window you’ll see three dots in the pull-down menu.  Select this, and then select the folder you just made as your Current Directory.
+\item	Basics (skip if you know this - if you don't, download ``Matlab Basics" and work through.):  
+\begin{enumerate}
+\item how to declare and manipulate vectors and matrices, 
+\item	plotting a function of one variable, (zooming in, ginput, hold on, line styles, adding a title and labeling axes)
+\item	plotting a function of two variables
+\item	writing a function as an M-file and using it
+\end{enumerate}
+\item	Try these routines: 
+\begin{enumerate}
+\item 	Y=iterates(@fcn, x0, N)
+\item 
+cobweb(@fcn,x0,N)
+\end{enumerate}
+First,  set the global variable, a, in the Command Window by typing “global a” and then “a=.5”, or whatever value you want it to be.  
+You can use ‘logistic’ as the function, i.e. you type:
+\begin{verbatim}
+global a
+a = 3.2
+ Y=iterate(@logistic,.1,20);
+plot(Y)
+\end{verbatim}
+and you should get a graph with 20 iterates of the function $f(x) = 3.2 x ( 1 - x) $ starting at $x_0 = .1$.\\
+Or type:
+\begin{verbatim}
+a = 2;
+cobweb(@logistic,.2,10)
+\end{verbatim}
+and you should get a cobweb graph with 10 iterates for the function $f(x) = 2 x (1 -x)$ starting at $x_0 = .2$
+\item Try the built-in routine “fzero”: z=fzero(@fcn,x0), where x0 is an initial guess for the zero.  You might want to use it to find the fixed point of the equation $f(x) = \frac{1}{2} ( x + \frac{5}{x} ) $, (which should be the equal to $\sqrt{5}$, as we saw last time).\\
+\begin{verbatim}
+z = fzero('.5 * (x + 5/x)- x',2)
+\end{verbatim}
+tells Matlab to find the zero of the function $.5 ( x + \frac{5}{x})  - x$, i.e. the point where $f(x) = x$.  It also tells Matlab to use the initial guess, 2.
+
+Try starting at  different initial guess: what happens?  Why?
+
+Instead of actually typing in the function you can put the name of a Matlab file that returns the value of the function.  An example of this can be found in the file: FindZeroExample which finds the zero of the function stored in the file FindZeroFunction.  Check these out and see if you can modify them to answer the following:
+\item	Use the built-in function fzero to find a point of period 2 for the logistic map with $a = 3.2$.   Use iterate to see if this period 2 orbit is {\it stable}.\\
+{\it Hint: you first might want to write an M-file that returns $F^2(x) - x $, where $F$ is the logistic map: $F(x) = 3.2 x (1 -x)$. }
+ \end{enumerate}
+\end{document}
