@@ -9,4 +9,5 @@ for k=1:length(xvals)
     [z,error_est] = newton(f,df, x0);
     final_vals(k) = z(end);
 end;
-
+clf
+imagesc(xvals,[],final_vals)
