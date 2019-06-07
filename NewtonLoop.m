@@ -1,7 +1,7 @@
-xvals = -20:.1:20;
+xvals = -2:.1:2;
 
 final_vals = zeros(size(xvals));
-f = 'x.^2-1';
+f = 'x.^3-x+1';
 df = '2*x';
 
 for k=1:length(xvals)

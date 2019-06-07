@@ -4,9 +4,9 @@ x=x0;
 % loop iterating nstep guesses
 for i=1:nstep
 % compute the value taken by f at x
-f=x.^8-3*x.^3+x.^2-1;
+f=x.^3-1;
 % compute the value taken by f? at x
-df=8*x.^7-9*x.^2+2*x;
+df=3*x.^2;
 % compute the updated guess x
 x=x-f./df;
 % plot magnitude of complex numbers
